@@ -24,22 +24,25 @@ if __name__ == '__main__':
 
     if args.movie:
         movie = "+".join(args.movie)
-        req_url = 'http://www.omdbapi.com/?t={movie}&apikey={key}'.format(movie=movie, key=api_key)
-        response = requests.get(req_url)
-        if response.status_code != 200:
-            sys.exit('Exiting:\n  API error code {}'.format(response.status_code))
-        print response.status_code
-        data = json.loads(response.text)
+        req_url = 'http://www.omdbapi.com/?t={}&apikey={}'.format(movie, api_key)
+        try:
+            response = requests.get(req_url)
+            if response.status_code != 200:
+                sys.exit('Exiting:\n  API error code {}'.format(response.status_code))
+            data = json.loads(response.text)
+
+            if not args.json:
+                print 'Title: {}'.format(data['Title'])
+                print 'Ratings:'
+                for source in data['Ratings']:
+                    print '\t{}: {}'.format(source['Source'],source['Value'])
+                print 'Genre: {}'.format(data['Genre'])
+                print 'Plot:\n  {}'.format(data['Plot'])
+                print 'Starring:\n  {}'.format(data['Actors'])
+            else:
+                print data
+        except KeyError:
+            sys.exit('Exiting:\n  Error finding movie')
     else:
         parser.print_help()
         sys.exit(1)
-
-    if not args.json:
-        print 'Title: {}'.format(data['Title'])
-        print 'Ratings:'
-        for source in data['Ratings']:
-            print '\t{} {}'.format(source['Source'],source['Value'])
-        print 'Genre: {}'.format(data['Genre'])
-        print 'Plot:\n\t{}'.format(data['Plot'])
-    else:
-        print data

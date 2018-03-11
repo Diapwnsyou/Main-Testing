@@ -1,15 +1,18 @@
 #!/usr/bin/env python
+'''Script that searches open movie database for movies or shows.
+Output can be formatted or sent entirely as a json string.'''
 
 import argparse
 import sys
-import requests
 import json
+import requests
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description=("""A script that calls openmoviedb to get movie information.
-                                                   Data return can be normal text or json."""))
+    parser = argparse.ArgumentParser(description=('''A script that calls openmoviedb
+                                                  to get movie information. Return
+                                                  data can be formatted text or json.'''))
     parser.add_argument('--m', '--movie', dest='movie',
-                        nargs='+', help='Provide Movie title to search for')    
+                        nargs='+', help='Provide Movie or show title to search for')
     parser.add_argument('--json', action='store_true',
                         help='Keeps API response in json format')
 
@@ -35,14 +38,14 @@ if __name__ == '__main__':
                 print 'Title: {}'.format(data['Title'])
                 print 'Ratings:'
                 for source in data['Ratings']:
-                    print '\t{}: {}'.format(source['Source'],source['Value'])
+                    print '\t{}: {}'.format(source['Source'], source['Value'])
                 print 'Genre: {}'.format(data['Genre'])
                 print 'Plot:\n  {}'.format(data['Plot'])
                 print 'Starring:\n  {}'.format(data['Actors'])
             else:
                 print data
         except KeyError:
-            sys.exit('Exiting:\n  Error finding movie')
+            sys.exit('Exiting:\n  Error finding movie or show')
     else:
         parser.print_help()
         sys.exit(1)

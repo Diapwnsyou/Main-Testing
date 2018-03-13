@@ -1,5 +1,5 @@
 # Main-Testing
-[![Build Status](https://travis-ci.org/Diapwnsyou/Main-Testing.svg?branch=master)](https://travis-ci.org/Diapwnsyou/Main-Testing)
+[![Build Status](https://travis-ci.org/Diapwnsyou/Python_API_Example.svg?branch=master)](https://travis-ci.org/Diapwnsyou/Python_API_Example)
 
 This is just a simple script that hits open movie database with an API call for whatever movie or show you want to search. It will return a formatted result:
 
